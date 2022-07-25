@@ -1,0 +1,201 @@
+body {
+    margin: 0;
+    background: #0a2b77;
+    background: -webkit-linear-gradient(to right, #0a2b77, #5ca3eb);
+    background: linear-gradient(to right, #0a2b77, #5ca3eb);
+
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* For mobile phones: */
+  .column {
+    width: 100%;
+  }
+  .column-2 {
+    width: 100%;
+  }
+  .column-3 {
+    width: 100%;
+  }
+  
+  @media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .column {
+      width: 50%;
+    }
+    .column-2 {
+      width: 100%;
+    }
+    .column-3 {
+      width: 33.33%;
+    }
+  }
+  
+  .column {
+    float: left;
+    padding: 15px;
+  }
+  
+  .column-2 {
+    float: left;
+    padding: 10px;
+  }
+  
+  .column-3 {
+    float: left;
+    padding: 15px;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Style the header */
+  .header {
+    background-color: #0f5126af;
+    padding: 20px;
+    text-align: center;
+    color: rgb(42, 36, 36);
+    font-family: din-round, sans-serif;
+    font-weight: bold;
+    font-size: 36pt;
+    color: white;
+  }
+  
+  h1 {
+    color: green;
+    font-family: din-round, sans-serif;
+    font-variant: small-caps;
+    font-weight: bold;
+  }
+  
+  h2 {
+    color: white;
+    font-family: din-round, sans-serif;
+    font-weight: bold;
+  }
+  
+  p {
+    color: white;
+    font-family: din-round, sans-serif;
+    font-weight: bold;
+    font-size: 17pt;
+  }
+  
+  /* blue button */
+  .button-b {
+    appearance: button;
+    background-color: #1899d6;
+    border: solid transparent;
+    border-radius: 20px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: din-round, sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 40px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 16px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 100%;
+  }
+  
+  .button-b:hover {
+    background-clip: padding-box;
+    background-color: #09374c;
+  }
+  
+  /* Green Button */
+  .button-g {
+    appearance: button;
+    background-color: #18d68a;
+    border: solid transparent;
+    border-radius: 20px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: din-round, sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 40px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 16px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 100%;
+  }
+  
+  .button-g:hover {
+    background-clip: padding-box;
+    background-color: #12543a;
+  }
+  
+  /* purple button */
+  .button-p {
+    appearance: button;
+    background-color: #792fd4;
+    border: solid transparent;
+    border-radius: 20px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: din-round, sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 40px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 16px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 100%;
+  }
+  
+  .button-p:hover {
+    background-clip: padding-box;
+    background-color: #351957;
+  }
+  

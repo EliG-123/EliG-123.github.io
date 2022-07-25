@@ -1,0 +1,1 @@
+// this should check the database and return the users progress through the trainings
