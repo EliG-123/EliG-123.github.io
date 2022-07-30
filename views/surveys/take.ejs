@@ -1,12 +1,17 @@
-<form action="/surveys" method="POST">
+<form action="/survey" method="POST">
   <!-- <label>Name</label>
     <input type="text" name="response1" value=" <%= answer.name %> " >
     <button type="submit">Submit</button> -->
-  <div class="column">
-    <iframe
+  <div class="column-2">
+    <!-- <iframe
       src="https://northwestern.az1.qualtrics.com/jfe/form/SV_1CaTPg0cEkxIiQm"
       height="800px"
       width="375px"
-    ></iframe>
+    ></iframe> -->
+    <div class="row">
+      <label>Name</label>
+      <input type="text" name="name" value=" <%= answer.name %> " >
+      <button type="submit">Submit</button>
+    </div>
   </div>
 </form>

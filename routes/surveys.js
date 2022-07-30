@@ -13,6 +13,10 @@ router.get('/take', (req, res) => {
     res.render('surveys/take', { headerText: "Take Survey", answer : new Answer() })
 })
 
+router.post('/survey', (req, res) => {
+    req.send(req.body.name)
+})
+
 // // "Create author route?""
 // router.post('/', async (req, res) => {
 //     const answer = new Answer({

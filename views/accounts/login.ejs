@@ -1,0 +1,29 @@
+<div class="err-msg">
+  <em>
+  <% if (messages.error) { %>
+    <%=  messages.error %>
+  <% } %>
+  </em>
+</div>
+
+
+<div class="column">
+    <form action="./login" method="POST">
+    
+        <div class="row">
+          <label class="label1" for="username">Username:</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+    </br>
+        <div class="row">
+          <label class="label1" for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+    </br>
+        <button class="button-g" type="submit">Log In</button> 
+    
+    </form>
+    </br>
+    <a class="button-p" href="./register">Register</a>
+    </div>
+    

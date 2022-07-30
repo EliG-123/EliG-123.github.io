@@ -35,7 +35,7 @@ body {
     .column-3 {
       width: 33.33%;
     }
-    .column-right {
+    .column-4 {
       width: 25%;
     }
   }
@@ -89,6 +89,45 @@ body {
     color: white;
     font-family: din-round, sans-serif;
     font-weight: bold;
+  }
+
+  input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 20px;
+  }
+  
+
+  .label1 {
+    color:white;
+    font-family: din-round, sans-serif;
+    font-weight:bold;
+    font-size: 15pt;
+
+  }
+
+  .err-msg {
+    color: red;
+    font-family: din-round, sans-serif;
+    font-weight:bold;
+    font-size: 15pt;
+    padding-left: 15px;
+    padding-top: 15px;
   }
   
   p {
