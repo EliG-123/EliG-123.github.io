@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Survey = require('../models/survey')
+const Answer = require('../models/survey')
 
 
 // Begin Survey Page
@@ -10,13 +10,24 @@ router.get('/', (req, res) => {
 
 // Take survey page
 router.get('/take', (req, res) => {
-    res.render('surveys/take', { headerText: "Take Survey", survey : new Survey() })
+    res.render('surveys/take', { headerText: "Take Survey", answer : new Answer() })
 })
 
-// "Create author route?""
-router.post('/', (req, res) => {
-    res.send('Answers?')
-})
+// // "Create author route?""
+// router.post('/', async (req, res) => {
+//     const answer = new Answer({
+//         answer: req.body.response1
+//     })
+//     try {
+//         const newAnswer = await answer.save()
+//         res.redirect('/sleep')
+//     } catch {
+//         res.render('/surveys/', {
+//             answer: answer,
+//             errorMessage: "ther was an error"
+//         })
+//     }
+// })
 
 
 module.exports = router 
