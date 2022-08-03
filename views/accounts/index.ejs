@@ -1,6 +1,16 @@
-<h1>Hello <%= name %></h1>
-<div class="column">
-    <form action="./logout?_method=DELETE" method="POST">
-        <button class="button-p" type="submit">Logout</button>
-    </form>
+<div class="row">
+    <div class="column-2">
+        <h1>Hello, <%= name %>! Welcome</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="column">
+        <form action="./logout?_method=DELETE" method="POST">
+            <button class="button-p" type="submit">Log Out</button>
+        </form>
+    </div>
+    <div class="column">
+        <a class="button-g" href="../">Home</a>
+    </div>
 </div>

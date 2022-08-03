@@ -10,12 +10,29 @@ router.get('/', (req, res) => {
 
 // Take survey page
 router.get('/take', (req, res) => {
-    res.render('surveys/take', { headerText: "Take Survey", answer : new Answer() })
+    res.render('surveys/take', { headerText: "Questionnaire", answer : new Answer() })
 })
 
-router.post('/survey', (req, res) => {
-    req.send(req.body.name)
+router.post('/', async (req, res) => {
+    const answer = new Answer({
+            q1: req.body.q1,
+            q2: req.body.q2,
+            q3: req.body.q3,
+            q4: req.body.q4,
+        })
+    try {
+        const newAnswer = await answer.save()
+        console.log(newAnswer)
+        res.redirect('/sleep')
+    } catch {
+        res.render('/surveys/', {
+            answer: answer,
+            errorMessage: "there was an error"
+        })
+    }
 })
+
+
 
 // // "Create author route?""
 // router.post('/', async (req, res) => {

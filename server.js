@@ -7,6 +7,8 @@ const app = express();
 const bcrypt = require('bcrypt')
 const expressLayouts = require("express-ejs-layouts");
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken')
+
 
 const indexRouter = require("./routes/index");
 const sleepRouter = require("./routes/sleep");
@@ -25,7 +27,10 @@ app.use(bodyParser.urlencoded({ limit : '10mb', extended : false }))
 
 
 const mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser : true });
+mongoose.connect(process.env.DATABASE_URL, { 
+  useNewUrlParser : true,
+  useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 db.on("error", (error) => {

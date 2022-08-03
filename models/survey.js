@@ -1,10 +1,22 @@
 const mongoose = require("mongoose");
 
-const answerSchema = new mongoose.Schema({
-  response: {
+const surveyResponseSchema = new mongoose.Schema({
+  q1: {
+    type: String,
+    required: true,
+  },
+  q2: {
+    type: String,
+    required: true,
+  },
+  q3: {
+    type: String,
+    required: true,
+  },
+  q4: {
     type: String,
     required: true,
   },
 });
 
-module.exports = mongoose.model("Answer", answerSchema);
+module.exports = mongoose.model("Answer", surveyResponseSchema);

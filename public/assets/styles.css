@@ -79,7 +79,7 @@ body {
   }
   
   h1 {
-    color: green;
+    color: white;
     font-family: din-round, sans-serif;
     font-variant: small-caps;
     font-weight: bold;
@@ -119,6 +119,13 @@ body {
     font-weight:bold;
     font-size: 15pt;
 
+  }
+
+  .chkbx_txt {
+    color:white;
+    font-family: din-round, sans-serif;
+    font-weight:bold;
+    font-size: 10pt;
   }
 
   .err-msg {
