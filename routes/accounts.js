@@ -46,7 +46,7 @@ router.use(methodOverride('_method'))
 
 router.get("/", checkAuthenticated, (req, res) => {
   console.log(usr)
-  res.render("accounts/index", { name: 'game'});
+  res.render("accounts/index", { name: 'THIS IS A PROBLEMO'});
 });
 
 router.get("/login", checkNotAuthenticated, (req, res) => {
