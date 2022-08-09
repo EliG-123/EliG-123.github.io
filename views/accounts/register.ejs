@@ -18,6 +18,7 @@
     <div class="row">
       <label class="label1" for="password">Password:</label>
       <input type="password" id="password" name="password" required />
+      <input type="checkbox" onclick="showhidepwd()"><span class="chkbx_txt"> Show Password</span>
     </div>
 </br>
     <button class="button-g" type="submit">Register</button>
@@ -27,3 +28,16 @@
 </br>
     <a class="button-p" href="./login">Login</a>
 </div>
+
+<script>
+    function showhidepwd () {
+      let pwd = document.getElementById("password")
+      if (pwd.type === 'password') {
+        pwd.type = 'text'
+      } else {
+        pwd.type = 'password'
+      }
+    }
+   
+  </script>
+    

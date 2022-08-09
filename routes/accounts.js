@@ -5,7 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require("express")
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken')
 const passport = require("passport")
 const localStrategy = require('passport-local').Strategy
 
@@ -45,8 +44,7 @@ router.use(methodOverride('_method'))
 
 
 router.get("/", checkAuthenticated, (req, res) => {
-  console.log(usr)
-  res.render("accounts/index", { name: 'THIS IS A PROBLEMO'});
+    res.render("accounts/index", { name: 'THIS IS A PROBLEMO'}); //THIS IS NOT THE NAME
 });
 
 router.get("/login", checkNotAuthenticated, (req, res) => {
@@ -58,7 +56,7 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
         failureRedirect: './login', 
         failureFlash:true,
       }), (req, res) => {
-        res.render('accounts/', {name: req.user.name})
+        res.render('accounts/', {name: req.user.name}) 
       })
 
 
@@ -81,7 +79,6 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
     console.log('error')
     res.redirect("./register");
   }
-  console.log(insertUser);
 });
 
 router.delete('/logout', (req, res) => {
