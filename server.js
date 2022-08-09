@@ -27,18 +27,18 @@ app.use(bodyParser.urlencoded({ limit : '10mb', extended : false }))
 
 
 const mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE_URI, { 
-  useNewUrlParser : true,
-  useUnifiedTopology: true,
-});
+// mongoose.connect(process.env.DATABASE_URI, { 
+//   useNewUrlParser : true,
+//   useUnifiedTopology: true,
+// });
 
 
-const db = mongoose.connection;
+// const db = mongoose.connection;
 
-db.on("error", (error) => {
-  console.error(error);
-});
-db.once("open", () => console.log("connected to mongoose"));
+// db.on("error", (error) => {
+//   console.error(error);
+// });
+// db.once("open", () => console.log("connected to mongoose"));
 
 
 app.use("/", indexRouter);
@@ -47,28 +47,28 @@ app.use("/surveys", surveyRouter);
 app.use("/accounts", accountsRouter)
 
 
-// const { MongoClient, ServerApiVersion } = require('mongodb');
-// const fs = require('fs');
-// const credentials = 'X509-cert-6598356970123720114.cer'
-// const client = new MongoClient('mongodb+srv://cluster0.hwlla.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority', {
-//   sslKey: credentials,
-//   sslCert: credentials,
-//   serverApi: ServerApiVersion.v1
-// });
-// async function run() {
-//   try {
-//     await client.connect();
-//     const database = client.db("testDB");
-//     const collection = database.collection("testCol");
-//     const docCount = await collection.countDocuments({});
-//     console.log(docCount);
-//     // perform actions using client
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-// run().catch(console.dir);
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const fs = require('fs');
+const credentials = 'X509-cert-6598356970123720114.cer'
+const client = new MongoClient('mongodb+srv://cluster0.hwlla.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority', {
+  sslKey: credentials,
+  sslCert: credentials,
+  serverApi: ServerApiVersion.v1
+});
+async function run() {
+  try {
+    await client.connect();
+    const database = client.db("testDB");
+    const collection = database.collection("testCol");
+    const docCount = await collection.countDocuments({});
+    console.log(docCount);
+    // perform actions using client
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
 
 
 app.listen(process.env.PORT || 3000, () => {
