@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ limit : '10mb', extended : false }))
 
 
 const mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE_URL, { 
+mongoose.connect(process.env.DATABASE_URI, { 
   useNewUrlParser : true,
   useUnifiedTopology: true,
 });
@@ -71,7 +71,7 @@ app.use("/accounts", accountsRouter)
 // run().catch(console.dir);
 
 
-app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Running");
 });
 
