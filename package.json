@@ -9,7 +9,6 @@
   "scripts": {
     "start": "node server.js",
     "devStart": "nodemon server.js",
-    "start": "serve -s build", 
     "heroku-postbuild": "npm run build"
   },
   "keywords": [],
