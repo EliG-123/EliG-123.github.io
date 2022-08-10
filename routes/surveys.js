@@ -5,7 +5,6 @@ const Answer = require('../models/survey')
 const User = require('../models/account');
 
 
-
 // Begin Survey Page
 router.get('/', checkAuthenticated, (req, res) => {
     const _id = req.session.passport.user
@@ -13,7 +12,7 @@ router.get('/', checkAuthenticated, (req, res) => {
         if (err) {
           throw err
         }
-        console.log(results.name); 
+        console.log(results.name, results.q1a); 
       });
     res.render('surveys/index')
 })
@@ -24,6 +23,18 @@ router.get('/take', checkAuthenticated, (req, res) => {
 })
 
 router.post('/', checkAuthenticated, async (req, res) => {
+    const filter = {
+        
+      }
+    const updateDoc = {
+        $set: {
+            q1a: req.body.q1
+        }
+    }
+    const result = await User.updateOne(filter, updateDoc)
+    console.log(result)
+    
+    
     const answer = new Answer({
             q1: req.body.q1,
             q2: req.body.q2,

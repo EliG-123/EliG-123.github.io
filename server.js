@@ -7,7 +7,6 @@ const app = express();
 const bcrypt = require('bcrypt')
 const expressLayouts = require("express-ejs-layouts");
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken')
 
 
 const indexRouter = require("./routes/index");
