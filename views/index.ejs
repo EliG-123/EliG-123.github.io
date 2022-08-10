@@ -1,17 +1,18 @@
 <div class="row">
   <div class="column">
-    <a class="button-b" href="/surveys/">Questionnaire</a>
+    <a class="button-g" href="/accounts/"><%= buttonName %></a>
   </div>
-  <div class="column">
-    <a class="button-p" href="/sleep/">Sleep</a>
-  </div>
-  <div class="column">
-      <span id="account_login"></span>
-  </div>
+  <% if (!auth) { %>
+    <div class="column">
+      <a class="button-p" href="/accounts/register">Register</a>
+    </div>
+<% } %>
+  <% if (auth) { %>
+      <div class="column">
+        <a class="button-p" href="/surveys/">Questionnaire</a>
+      </div>
+      <div class="column">
+        <a class="button-b" href="/sleep/">Sleep</a>
+      </div>
+  <% } %>
 </div>
-<script>
-  const bttn = document.getElementById("account_login")
-
-  bttn.innerHTML ='<a href="/accounts/" class="button-g">Log In</a>'
-
-</script>

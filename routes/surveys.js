@@ -1,19 +1,29 @@
 const express = require('express');
 const router = express.Router();
+
 const Answer = require('../models/survey')
+const User = require('../models/account');
+
 
 
 // Begin Survey Page
-router.get('/', (req, res) => {
+router.get('/', checkAuthenticated, (req, res) => {
+    const _id = req.session.passport.user
+    User.findOne({ _id }, (err, results) => {
+        if (err) {
+          throw err
+        }
+        console.log(results.name); 
+      });
     res.render('surveys/index')
 })
 
 // Take survey page
-router.get('/take', (req, res) => {
+router.get('/take', checkAuthenticated, (req, res) => {
     res.render('surveys/take', { headerText: "Questionnaire", answer : new Answer() })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', checkAuthenticated, async (req, res) => {
     const answer = new Answer({
             q1: req.body.q1,
             q2: req.body.q2,
@@ -49,6 +59,15 @@ router.post('/', async (req, res) => {
 //         })
 //     }
 // })
+
+function checkAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    }
+    return res.redirect('/')
+
+}
+
 
 
 module.exports = router 

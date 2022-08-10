@@ -9,7 +9,6 @@ const passport = require("passport")
 const localStrategy = require('passport-local').Strategy
 
 
-
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
@@ -44,7 +43,13 @@ router.use(methodOverride('_method'))
 
 
 router.get("/", checkAuthenticated, (req, res) => {
-    res.render("accounts/index", { name: 'THIS IS A PROBLEMO'}); //THIS IS NOT THE NAME
+  const _id = req.session.passport.user
+  User.findOne({ _id }, (err, results) => {
+    if (err) {
+      throw err
+    }
+    res.render("accounts/index", { name:results.name }); 
+  });
 });
 
 router.get("/login", checkNotAuthenticated, (req, res) => {
@@ -56,9 +61,8 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
         failureRedirect: './login', 
         failureFlash:true,
       }), (req, res) => {
-        res.render('accounts/', {name: req.user.name}) 
+        res.render('accounts/', { name:req.user.name })
       })
-
 
 
 router.get("/register", checkNotAuthenticated, (req, res) => {

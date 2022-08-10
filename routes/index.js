@@ -17,7 +17,16 @@ router.use(passport.session());
 router.use(methodOverride('_method'))
 
 router.get('/', (req, res) => {
-    res.render('index.ejs')
+  try {
+    if (req.isAuthenticated()) {
+      res.render('index.ejs', {buttonName:'My Account', auth:true})
+    } else {
+      res.render('index.ejs', {buttonName:'Log In', auth:false})
+    }
+  } catch {
+    console.log('caught')
+    res.render('index.ejs', {buttonName:'Log In', auth:false})
+  }
 })
 
 router.post('/logout', function(req, res){
