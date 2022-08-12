@@ -22,23 +22,20 @@ router.get('/take', checkAuthenticated, (req, res) => {
 })
 
 router.post('/', checkAuthenticated, async (req, res) => {
-    const filter = {
-        
-      }
-    const updateDoc = {
-        $set: {
-            q1a: req.body.q1,
-            q2a: req.body.q2,
-            q3a: req.body.q3,
-            q4a: req.body.q4,
-        }
-    }
-    const result = await User.updateOne(filter, updateDoc)
-    console.log(result)
     try {
-        const newAnswer = await answer.save()
-        console.log(newAnswer)
-        res.redirect('/sleep')
+        const filter = {
+            
+        }
+        const updateDoc = {
+            $set: {
+                q1a: req.body.q1,
+                q2a: req.body.q2,
+                q3a: req.body.q3,
+                q4a: req.body.q4,
+            }
+        }
+        const result = await User.updateOne(filter, updateDoc)
+        console.log(result)
     } catch {
         res.render('/surveys/', {
             answer: answer,
