@@ -35,7 +35,7 @@ router.post('/', checkAuthenticated, async (req, res) => {
             }
         }
         const result = await User.updateOne(filter, updateDoc)
-        console.log(result)
+        res.redirect('/sleep')
     } catch {
         res.render('/surveys/', {
             answer: answer,
