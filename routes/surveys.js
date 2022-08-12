@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const Answer = require('../models/survey')
 const User = require('../models/account');
 
 
@@ -12,7 +11,7 @@ router.get('/', checkAuthenticated, (req, res) => {
         if (err) {
           throw err
         }
-        console.log(results.name, results.q1a); 
+        console.log(results.name, results.q2a); 
       });
     res.render('surveys/index')
 })
@@ -28,19 +27,14 @@ router.post('/', checkAuthenticated, async (req, res) => {
       }
     const updateDoc = {
         $set: {
-            q1a: req.body.q1
+            q1a: req.body.q1,
+            q2a: req.body.q2,
+            q3a: req.body.q3,
+            q4a: req.body.q4,
         }
     }
     const result = await User.updateOne(filter, updateDoc)
     console.log(result)
-    
-    
-    const answer = new Answer({
-            q1: req.body.q1,
-            q2: req.body.q2,
-            q3: req.body.q3,
-            q4: req.body.q4,
-        })
     try {
         const newAnswer = await answer.save()
         console.log(newAnswer)

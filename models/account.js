@@ -8,6 +8,9 @@ var userSchema = new mongoose.Schema({
     username: String, 
     password: String,
     q1a: String, 
+    q2a: String,
+    q3a: String,
+    q4a: String
 })
 
 
