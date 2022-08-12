@@ -18,7 +18,7 @@ router.get('/', checkAuthenticated, (req, res) => {
 
 // Take survey page
 router.get('/take', checkAuthenticated, (req, res) => {
-    res.render('surveys/take', { headerText: "Questionnaire", answer : new Answer() })
+    res.render('surveys/take', { headerText: "Questionnaire" })
 })
 
 router.post('/', checkAuthenticated, async (req, res) => {
