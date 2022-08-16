@@ -1,7 +1,4 @@
 <div class="row">
-  <div class="column">
-    <a class="button-g" href="/accounts/"><%= buttonName %></a>
-  </div>
   <% if (!auth) { %>
     <div class="column">
       <a class="button-p" href="/accounts/register">Register</a>
@@ -12,4 +9,7 @@
         <a class="button-p" href="/surveys/">Questionnaire</a>
       </div>
   <% } %>
+  <div class="column">
+    <a class="button-g" href="/accounts/"><%= buttonName %></a>
+  </div>
 </div>

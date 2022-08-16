@@ -19,6 +19,8 @@ let harpSoundClicked = false;
 const thBeep = document.getElementById("threeBeeps");
 const hSound = document.getElementById("harpSound");
 
+
+
 let tracker = 0;
 
 console.log("yeet");
@@ -103,7 +105,7 @@ function whichButtonFunc() {
         cueObj[tracker][1].play();
         cueObj[tracker][1].addEventListener("ended", () => {
           thBeep.innerHTML =
-            '<button class="button-p" role="button" onclick="threeBeepFunc()">Three Beeps</button>';
+            '<button class="button-g" role="button" onclick="threeBeepFunc()">Three Beeps</button>';
           hSound.innerHTML =
             '<button class="button-p" role="button" onclick="harpSoundFunc()">Harp Sound</button>';
           thBeep.style.visibility = "visible";
@@ -170,6 +172,8 @@ function volTest(cuePart) {
   console.log("volTest " + tracker);
   document.getElementById("heardButton").innerHTML =
     '<button class="button-p" role="button" onclick="heardIt()">Heard It</button>';
+  document.getElementById("heardButton").style.visibility = "visible";
+
   let vol = 0.01;
   let cueCheck = setInterval(function () {
     // play the cues at increasing volume, every **15s
@@ -179,6 +183,7 @@ function volTest(cuePart) {
       vol += 0.01;
     } else {
       console.log(vol);
+      document.getElementById("heardButton").style.visibility = "hidden";
       clearInterval(cueCheck);
       heard = false;
       volObj.push(vol);
@@ -197,6 +202,8 @@ function startTrainingButtonFunc() {
   thBeep.parentNode.removeChild(thBeep);
   hSound.parentNode.removeChild(hSound);
 
+  document.getElementById('volObjFrm').value = volObj
+
   document.getElementById("startTrainingButton").innerHTML =
-    '<button class="button-g" role="button">Start Training</button>';
+    '<button type="submit" class="button-g">Start Training</button>';
 }

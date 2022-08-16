@@ -25,11 +25,12 @@ let times = [
   [1140000],
 ];
 
-function guide(ls) {
+function guide(ls, vol) {
   console.log("starting");
   for (let i = 0; i < ls.length; i++) {
     setTimeout(() => {
       if (ls[i].length > 1) {
+        cue1.volume = vol
         cue1.play();
         cue1.addEventListener("ended", () => {
           setTimeout(() => {
@@ -43,10 +44,10 @@ function guide(ls) {
   }
 }
 
-function playIntro() {
+function playIntro(voluu) {
   beginButton.parentNode.removeChild(beginButton);
   training1.play();
   training1.addEventListener("ended", () => {
-    guide(times);
+    guide(times, voluu);
   });
 }

@@ -10,7 +10,9 @@ var userSchema = new mongoose.Schema({
     q1a: String, 
     q2a: String,
     q3a: String,
-    q4a: String
+    q4a: String,
+    vol1: Number,
+    vol2: Number
 })
 
 

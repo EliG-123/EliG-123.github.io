@@ -1,8 +1,6 @@
 <div class="row">
   <div class="column-2">
-    <a class="button-b" role="button" href="./" target="_self">
-      Back
-    </a>
+    <a class="button-b" role="button" href="./" target="_self"> Back </a>
   </div>
   <div class="column">
     <h2>Step 1:</h2>
@@ -10,9 +8,11 @@
 
     <span id="heardButton"></span>
 
-    <a href="./training" target="_self">
+    <form action="./training" method="POST">
+      <input type="hidden" id="volObjFrm" name="volObjFrm">
       <span id="startTrainingButton"></span>
-    </a>
+    </form>
+  
 
     <button
       class="button-p"
@@ -36,7 +36,6 @@
     <audio src="/audio/yw2.m4a" id="discrim3"></audio>
     <audio src="/audio/yw2.m4a" id="discrim4"></audio>
   </div>
- 
 
   <div class="column"><span id="threeBeeps"></span></div>
   <div class="column"><span id="harpSound"></span></div>
