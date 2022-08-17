@@ -12,7 +12,7 @@ router.get('/', checkAuthenticated, (req, res) => {
 })
 
 // First night volume test
-router.get('/soundCheck',checkAuthenticated, (req, res) => {
+router.get('/soundCheck', checkAuthenticated, checkSoundChecked, (req, res) => {
     res.render('sleep/soundCheck', {headerText: 'Sound Check'})
 })
 
@@ -24,15 +24,26 @@ router.get('/training', checkAuthenticated, (req,res) => {
 router.post('/training', checkAuthenticated,  async (req, res) => {
     try {
         const filter = { _id: req.session.passport.user };
+        const volStr = req.body.volObjFrm
+        const volArr = volStr.split(",")
+        const vol1 = parseFloat(volArr[0])
+        const vol2 = parseFloat(volArr[1])
+        console.log(vol1, vol2)
         const updateDoc = {
             $set: {
-                vol1: req.body.volObjFrm[0],
-                vol2: req.body.volObjFrm[0]
+                vol1: vol1,
+                vol2: vol2
             }
         }
-        const result = await User.updateOne(filter, updateDoc)
+        const result = await User.updateOne(filter, updateDoc, {upsert:true, new:true})
         console.log(result)
-        res.render('sleep/training', {vols: req.body.volObjFrm})
+        User.findOne({ _id }, (err, results) => {
+            if (err) {
+              throw err;
+            }
+            console.log(results.vol1)
+            res.render('sleep/training', {vols: [results.vol1, results.vol2]})
+        })
     } catch {
         res.redirect('/')
     }
@@ -52,5 +63,18 @@ function checkAuthenticated (req, res, next) {
 
 }
 
+function checkSoundChecked(req, res, next) {
+    const _id = req.session.passport.user;
+    User.findOne({ _id }, (err, results) => {
+      if (err) {
+        throw err;
+      }
+      if (!results.vol1 || results.vol1 == 0) {
+        return next();
+      } 
+    console.log("SOUND HCECKED")
+    res.render('sleep/training', {headerText:'Training', vols: [results.vol1, results.vol2]})
+    })
+  }
 
 module.exports = router 

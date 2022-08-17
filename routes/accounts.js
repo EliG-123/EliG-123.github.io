@@ -71,12 +71,15 @@ router.get("/register", checkNotAuthenticated, (req, res) => {
 
 router.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
+    const trial = Math.round(Math.random())
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const insertUser = await User.create({
       name: req.body.name,
       email: req.body.email,
       username: req.body.username,
       password: hashedPassword,
+      trial: trial,
+      day: 1
     })
     res.redirect("./login");
   } catch {

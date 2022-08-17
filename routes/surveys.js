@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require("../models/account");
 
 // Begin Survey Page
-router.get("/", checkAuthenticated, (req, res) => {
+router.get("/", checkAuthenticated, checkAnswered, (req, res) => {
   try {
     const _id = req.session.passport.user;
     User.findOne({ _id }, (err, results) => {
@@ -15,16 +15,16 @@ router.get("/", checkAuthenticated, (req, res) => {
     });
     res.render("surveys/index");
   } catch {
-    res.render("surveys/index"); 
+    res.render("surveys/index");
   }
 });
 
 // Take survey page
-router.get("/take", checkAuthenticated, (req, res) => {
+router.get("/take", checkAuthenticated, checkAnswered, (req, res) => {
   res.render("surveys/take", { headerText: "Questionnaire" });
 });
 
-router.post("/", checkAuthenticated, async (req, res) => {
+router.post("/", checkAuthenticated, checkAnswered, async (req, res) => {
   try {
     const filter = { _id: req.session.passport.user };
     const updateDoc = {
@@ -51,6 +51,20 @@ function checkAuthenticated(req, res, next) {
     return next();
   }
   return res.redirect("/");
+}
+
+function checkAnswered(req, res, next) {
+  const _id = req.session.passport.user;
+  User.findOne({ _id }, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    if (!results.q1a) {
+      return next();
+    } else {
+      return res.redirect("/sleep");
+    }
+  });
 }
 
 module.exports = router;
