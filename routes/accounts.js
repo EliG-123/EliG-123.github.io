@@ -40,17 +40,47 @@ router.use(
 );
 router.use(methodOverride('_method'))
 
+async function checkProgress (req, res) {
+  console.log('checking')
+  try {
+    console.log('iffing')
+    const _id = req.session.passport.user
+    console.log('id')
+    await User.findOne({_id }, async (err, results) => {
+      console.log('found')
+      if (err) {
+        throw err
+      }
+      var progObj = {
+        'questNext': results.q1a ? 'soundcheck' : 'questionnaire',
+        "soundNext": results.vol1 ? 'training' : 'soundcheck'
+      }
+      console.log(progObj)
+      return progObj
+    }).clone();
+  } catch (e) {
+    console.log('caught', e)
+    return 'not authenticated'
+  }
+  // console.log('post caught')
+  // return 'poopooopoooop'
+}
 
 
-router.get("/", checkAuthenticated, (req, res) => {
+router.get("/", checkAuthenticated, async (req, res) => {
+  let ou = await checkProgress(req, res)
   const _id = req.session.passport.user
   User.findOne({ _id }, (err, results) => {
     if (err) {
       throw err
-    }
-    res.render("accounts/index", { name:results.name }); 
+    } if (!results.q1a) {
+      res.render("accounts/index", { name:results.name, nextpg: 'questionnaire'}); 
+    } 
+      res.render("accounts/index", { name:results.name, nextpg: 'soundcheck' });
   });
+  console.log('yee', ou)
 });
+
 
 router.get("/login", checkNotAuthenticated, (req, res) => {
   res.render("accounts/login", { headerText: "Log In" });
@@ -61,7 +91,7 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
         failureRedirect: './login', 
         failureFlash:true,
       }), (req, res) => {
-        res.render('accounts/', { name:req.user.name })
+        res.render('accounts/', { name:req.user.name, nextpg:'poop' })
       })
 
 
@@ -116,14 +146,5 @@ function checkNotAuthenticated (req, res, next) {
     return next()
 }
 
-// function authenticateToken(req, res, next) {
-//   const authHeader = req.headers['authorization']
-//   const token = authHeader && authHeader.split(' ')[1]
-//   if (token == null) {
-//     return res.sendStatus(401)
-//     }
-//   req.token = token
-//   next()
-// }
-
 module.exports = router;
+

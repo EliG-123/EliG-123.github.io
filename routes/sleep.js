@@ -72,7 +72,6 @@ function checkSoundChecked(req, res, next) {
       if (!results.vol1 || results.vol1 == 0) {
         return next();
       } 
-    console.log("SOUND HCECKED")
     res.render('sleep/training', {headerText:'Training', vols: [results.vol1, results.vol2]})
     })
   }

@@ -5,8 +5,6 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 
 
-
-
 router.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
