@@ -7,13 +7,13 @@ var userSchema = new mongoose.Schema({
     email: String,
     username: String, 
     password: String,
-    day: Number,
-    trial: Number,
-    q1a: String, 
+    day: Number, //what day of experiment
+    trial: Number, //control or experimental
+    q1a: String, //answers to the first survey/questionaiire questions
     q2a: String,
     q3a: String,
     q4a: String,
-    vol1: Number,
+    vol1: Number, // volumes from soundcheck, only one is important, not sure which
     vol2: Number
 })
 

@@ -12,13 +12,19 @@ router.get('/', checkAuthenticated, (req, res) => {
 })
 
 // First night volume test
-router.get('/soundCheck', checkAuthenticated, checkSoundChecked, (req, res) => {
+router.get('/soundCheck', checkAuthenticated,  checkSoundChecked, (req, res) => {
     res.render('sleep/soundCheck', {headerText: 'Sound Check'})
 })
 
 // First night cue training
-router.get('/training', checkAuthenticated, (req,res) => {
-    res.render('sleep/training',  {headerText: 'Training'} )
+router.get('/training', checkAuthenticated, checkNotSoundChecked, (req, res) => {
+    const _id = req.session.passport.user
+    User.findOne({ _id }, (err, results) => {
+        if (err) {
+          throw err;
+        }
+        res.render('sleep/training', {headerText:'Training', vols: [results.vol1, results.vol2]})
+    })
 })
 
 router.post('/training', checkAuthenticated,  async (req, res) => {
@@ -42,7 +48,7 @@ router.post('/training', checkAuthenticated,  async (req, res) => {
               throw err;
             }
             console.log(results.vol1)
-            res.render('sleep/training', {vols: [results.vol1, results.vol2]})
+            res.render('sleep/training', {headerText:'Training', vols: [results.vol1, results.vol2]})
         })
     } catch {
         res.redirect('/')
@@ -63,17 +69,56 @@ function checkAuthenticated (req, res, next) {
 
 }
 
-function checkSoundChecked(req, res, next) {
-    const _id = req.session.passport.user;
-    User.findOne({ _id }, (err, results) => {
-      if (err) {
-        throw err;
-      }
-      if (!results.vol1 || results.vol1 == 0) {
-        return next();
-      } 
-    res.render('sleep/training', {headerText:'Training', vols: [results.vol1, results.vol2]})
-    })
+async function checkSoundChecked (req, res, next) {
+    const _id = req.session.passport.user
+    await User.findOne({_id }, async (err, results) => {
+        if (err) {
+          throw err
+        }
+        if (results.vol1) {
+           return res.render('sleep/training',  {headerText:'Training', vols: [results.vol1, results.vol2]})
+        } else {
+            return next()
+        }
+    }).clone()
+}
+
+async function checkNotSoundChecked (req, res, next) {
+    const _id = req.session.passport.user
+    await User.findOne({_id }, async (err, results) => {
+        if (err) {
+          throw err
+        }
+        if (!results.vol1) {
+           return res.render('sleep/soundCheck',  {headerText:'Soundcheck'})
+        } else {
+            return next()
+        }
+    }).clone()
+}
+
+async function checkProgress (req, res) {
+    try {
+      const _id = req.session.passport.user
+      await User.findOne({_id }, async (err, results) => {
+        if (err) {
+          throw err
+        }
+        progObj = { //global variable, i know i know, bad form but idk how to return it!
+        }
+        if (results.q1a) {
+          if (results.vol1) {
+            progObj['nxtpg'] = 'training'
+          } else {
+            progObj['nxtpg'] = 'soundcheck'
+          }
+        } else {
+          progObj['nxtpg'] = 'questionnaire'
+        }
+      }).clone();
+    } catch (e) {
+      return 'not authenticated'
+    }
   }
 
 module.exports = router 
