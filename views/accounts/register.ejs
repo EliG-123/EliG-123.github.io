@@ -1,3 +1,14 @@
+<div class="err-msg">
+  <em>
+  <% try { %>
+    <% if (errMsg) { %>
+      <%= errMsg %>
+    <% } %>
+  <% } catch {} %>
+  </em>
+</div>
+
+
 <div class="column">
 <form action="./register" method="POST">
     <div class="row">

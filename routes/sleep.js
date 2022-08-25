@@ -12,12 +12,12 @@ router.get('/', checkAuthenticated, (req, res) => {
 })
 
 // First night volume test
-router.get('/soundCheck', checkAuthenticated,  checkSoundChecked, (req, res) => {
+router.get('/soundCheck', checkAuthenticated,  checkNotAnswered, checkSoundChecked, (req, res) => {
     res.render('sleep/soundCheck', {headerText: 'Sound Check'})
 })
 
 // First night cue training
-router.get('/training', checkAuthenticated, checkNotSoundChecked, (req, res) => {
+router.get('/training', checkAuthenticated, checkNotAnswered, checkNotSoundChecked, (req, res) => {
     const _id = req.session.passport.user
     User.findOne({ _id }, (err, results) => {
         if (err) {
@@ -69,7 +69,8 @@ function checkAuthenticated (req, res, next) {
 
 }
 
-async function checkSoundChecked (req, res, next) {
+async function checkSoundChecked (req, res, next) { // if they try to redo soundcheck
+                                                    // what if they try to do this but havent done questionairre
     const _id = req.session.passport.user
     await User.findOne({_id }, async (err, results) => {
         if (err) {
@@ -83,7 +84,8 @@ async function checkSoundChecked (req, res, next) {
     }).clone()
 }
 
-async function checkNotSoundChecked (req, res, next) {
+async function checkNotSoundChecked (req, res, next) { // if they try to go training but they havent soundchecked
+                                                        
     const _id = req.session.passport.user
     await User.findOne({_id }, async (err, results) => {
         if (err) {
@@ -119,6 +121,20 @@ async function checkProgress (req, res) {
     } catch (e) {
       return 'not authenticated'
     }
+  }
+
+  function checkNotAnswered(req, res, next) {
+    const _id = req.session.passport.user
+    User.findOne({_id}, (err, results) => {
+      if (err) {
+        throw err
+      } 
+      if (!results.q1a) {
+        return res.render('surveys/')
+      } else {
+        return next()
+      }
+    })
   }
 
 module.exports = router 

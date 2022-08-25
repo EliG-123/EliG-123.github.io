@@ -24,9 +24,9 @@ const progLinks = {
 }
 
 router.get('/', async (req, res) => {
-  let ou = checkProgress(req, res)
   try {
     if (req.isAuthenticated()) {
+      await checkProgress(req, res)
       res.render('index.ejs', {
         buttonName:'My Account', 
         auth:true, 
