@@ -1,6 +1,36 @@
+let wakeLock = null
+
+const requestWakeLock = async () => {
+  try {
+    wakeLock = await navigator.wakeLock.request()
+    wakeLock.addEventListener('release', () => {
+      console.log('Wake Lock was released');
+    });
+    console.log('Wake Lock is active');  
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const releaseWakeLock = async () => {
+  if (!wakeLock) {
+    return;
+  }
+  try {
+    await wakeLock.release()
+    wakeLock = null;
+  } catch (e) {
+    console.log (e)
+  }
+}
+
+requestWakeLock();
+
+
 const training1 = document.getElementById("training1");
 const cue1 = document.getElementById("cue1");
 const guidance = document.getElementById("guidance");
+const stopGuidance = document.getElementById("stopGuidance")
 
 
 const beginButton = document.getElementById("beginButton");
@@ -11,7 +41,7 @@ let times = [
   [180000, guidance],
   [255000, guidance],
   // --- stop guidance now --- //
-  [345000],
+  [345000, stopGuidance],
   [395000],
   [450000],
   [515000],
@@ -23,13 +53,14 @@ let times = [
   [930000],
   [1020000],
   [1140000],
+  [21855000, 0, 0] // this is the actual sleep cue
 ];
 
 function guide(ls, vol) {
   console.log("starting");
   for (let i = 0; i < ls.length; i++) {
     setTimeout(() => {
-      if (ls[i].length > 1) {
+      if (ls[i].length == 2) {
         cue1.volume = vol
         cue1.play();
         cue1.addEventListener("ended", () => {
@@ -37,7 +68,14 @@ function guide(ls, vol) {
             ls[i][1].play();
           }, 700);
         });
+      } else if (ls[i].length == 3) {
+        cue1.volume = vol;
+        cue1.play();
+        cue1.addEventListener('ended', () => {
+          releaseWakeLock()
+        })
       } else {
+        cue1.volume = vol
         cue1.play();
       }
     }, ls[i][0]);

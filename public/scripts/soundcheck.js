@@ -1,7 +1,36 @@
+let wakeLock = null
+
+const requestWakeLock = async () => {
+  try {
+    wakeLock = await navigator.wakeLock.request()
+    wakeLock.addEventListener('release', () => {
+      console.log('Wake Lock was released');
+    });
+    console.log('Wake Lock is active');  
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const releaseWakeLock = async () => {
+  if (!wakeLock) {
+    return
+  }
+  try {
+    await wakeLock.release()
+    wakeLock = null;
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+requestWakeLock();
+
 const soundcheck1 = document.getElementById("soundcheck1");
 const soundcheck2 = document.getElementById("soundcheck2");
 
 console.log(soundcheck1);
+
 
 const cue1 = document.getElementById("cue1"); // three beeps
 const cue2 = document.getElementById("cue2"); // harp sound
@@ -206,4 +235,9 @@ function startTrainingButtonFunc() {
 
   document.getElementById("startTrainingButton").innerHTML =
     '<button type="submit" class="button-g">Start Training</button>';
+
+  releaseWakeLock()
 }
+
+
+
