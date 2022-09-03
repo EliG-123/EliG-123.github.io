@@ -23,7 +23,6 @@ body {
   .column-right {
     width: 30%;
   }
-  
   @media only screen and (min-width: 768px) {
     /* For desktop: */
     .column {
@@ -89,6 +88,14 @@ body {
     color: white;
     font-family: din-round, sans-serif;
     font-weight: bold;
+  }
+
+  .iframe-style {
+    width: 90%;
+    height: 80vh;
+    float: center;
+    padding-left: 15px;
+    border: none;
   }
 
   input[type=text], select {

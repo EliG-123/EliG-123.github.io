@@ -21,18 +21,15 @@ router.get("/", checkAuthenticated, checkAnswered, (req, res) => {
 
 // Take survey page
 router.get("/take", checkAuthenticated, checkAnswered, (req, res) => {
-  res.render("surveys/take", { headerText: "Questionnaire" });
+  res.render("surveys/take", { headerText: "Questionnaire", participantID: req.session.passport.user });
 });
 
-router.post("/", checkAuthenticated, checkAnswered, async (req, res) => {
+router.post("/", checkAuthenticated, async (req, res) => {
   try {
     const filter = { _id: req.session.passport.user };
     const updateDoc = {
       $set: {
-        q1a: req.body.q1,
-        q2a: req.body.q2,
-        q3a: req.body.q3,
-        q4a: req.body.q4,
+        q1a: true
       },
     };
     const result = await User.updateOne(filter, updateDoc, { upsert: true });

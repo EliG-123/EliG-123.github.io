@@ -9,10 +9,7 @@ var userSchema = new mongoose.Schema({
     password: String,
     day: Number, //what day of experiment
     trial: Number, //control or experimental
-    q1a: String, //answers to the first survey/questionaiire questions
-    q2a: String,
-    q3a: String,
-    q4a: String,
+    q1a: Boolean, //see if survey1 was completed
     vol1: Number, // volumes from soundcheck, only one is important, not sure which
     vol2: Number
 })
