@@ -29,12 +29,6 @@ initializePassport(
     id => User.findOne({id: id} )
 )
 
-// Again, before I break. this worked
-// initializePassport(
-//   passport, 
-//   id => User.findOne({id: id})
-// )
-
 
 router.use(flash())
 router.use(session({
@@ -52,6 +46,7 @@ router.use(
 );
 router.use(methodOverride('_method'))
 
+// Once you're logged in page
 router.get("/", checkAuthenticated, async (req, res) => {
   let ou = await checkProgress(req, res)
   console.log(progObj, progLinks[progObj['nxtpg']])
@@ -68,11 +63,12 @@ router.get("/", checkAuthenticated, async (req, res) => {
   });
 });
 
-
+// Log In page
 router.get("/login", checkNotAuthenticated, (req, res) => {
   res.render("accounts/login", { headerText: "Log In" });
 });
 
+// Authenticate Login POST
 router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
         failureRedirect: './login', 
         failureFlash:true,
@@ -86,10 +82,12 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
          })
       })
 
+// Register Page
 router.get("/register", checkNotAuthenticated, (req, res) => {
   res.render("accounts/register", { headerText: "Register" });
 });
 
+// Create new user into database
 router.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
     const trial = Math.round(Math.random())
@@ -118,6 +116,7 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
   }
 });
 
+// Log Out
 router.delete('/logout', (req, res) => {
     req.logOut((e) => {
         if (e) {
@@ -126,6 +125,8 @@ router.delete('/logout', (req, res) => {
         res.redirect('/')
     })  
 })
+
+// ------------ PROGRESS/AUTH CHECKING FUNCTIONS ------------ //
 
 function checkAuthenticated (req, res, next) {
     if (req.isAuthenticated()) {

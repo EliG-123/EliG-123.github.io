@@ -11,7 +11,6 @@ router.get("/", checkAuthenticated, checkAnswered, (req, res) => {
       if (err) {
         throw err;
       }
-      console.log(results.name, results.q2a);
     });
     res.render("surveys/index");
   } catch {
@@ -21,9 +20,29 @@ router.get("/", checkAuthenticated, checkAnswered, (req, res) => {
 
 // Take survey page
 router.get("/take", checkAuthenticated, checkAnswered, (req, res) => {
-  res.render("surveys/take", { headerText: "Questionnaire", participantID: req.session.passport.user });
+
+  let today = new Date();
+  let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  let dateTime = date+' '+time;
+  
+  const _id = req.session.passport.user
+  User.findOne({ _id }, (err, results) => {
+    if (err) {
+      throw (err)
+    } else {
+      res.render("surveys/take", { 
+        headerText: "Questionnaire", 
+        participantID: _id,
+        whichDay: results.day,
+        whatTime: dateTime
+       });
+    }
+  })
+  
 });
 
+// submit the survey
 router.post("/", checkAuthenticated, async (req, res) => {
   try {
     const filter = { _id: req.session.passport.user };
@@ -33,8 +52,6 @@ router.post("/", checkAuthenticated, async (req, res) => {
       },
     };
     const result = await User.updateOne(filter, updateDoc, { upsert: true });
-    console.log(result);
-
     res.redirect("/sleep");
   } catch {
     res.render("/surveys/", {
@@ -42,6 +59,8 @@ router.post("/", checkAuthenticated, async (req, res) => {
     });
   }
 });
+
+// ------------ PROGRESS/AUTH CHECKING FUNCTIONS ------------ //
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {

@@ -7,7 +7,7 @@ const User = require('../models/account');
 
 
 // index will direct to correct sleep page based on your progress
-router.get('/', checkAuthenticated, (req, res) => {
+router.get('/', checkAuthenticated, checkNotAnswered, (req, res) => {
     res.render('sleep/index')
 })
 
@@ -27,7 +27,7 @@ router.get('/training', checkAuthenticated, checkNotAnswered, checkNotSoundCheck
     })
 })
 
-router.post('/training', checkAuthenticated,  async (req, res) => {
+router.post('/training', checkAuthenticated,  checkNotSoundChecked, async (req, res) => {
     try {
         const filter = { _id: req.session.passport.user };
         const volStr = req.body.volObjFrm
@@ -69,8 +69,7 @@ function checkAuthenticated (req, res, next) {
 
 }
 
-async function checkSoundChecked (req, res, next) { // if they try to redo soundcheck
-                                                    // what if they try to do this but havent done questionairre
+async function checkSoundChecked (req, res, next) { 
     const _id = req.session.passport.user
     await User.findOne({_id }, async (err, results) => {
         if (err) {
@@ -84,7 +83,7 @@ async function checkSoundChecked (req, res, next) { // if they try to redo sound
     }).clone()
 }
 
-async function checkNotSoundChecked (req, res, next) { // if they try to go training but they havent soundchecked
+async function checkNotSoundChecked (req, res, next) {
                                                         
     const _id = req.session.passport.user
     await User.findOne({_id }, async (err, results) => {
@@ -130,7 +129,7 @@ async function checkProgress (req, res) {
         throw err
       } 
       if (!results.q1a) {
-        return res.render('surveys/')
+        return res.redirect('surveys/')
       } else {
         return next()
       }

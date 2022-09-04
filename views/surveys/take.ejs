@@ -35,7 +35,7 @@
 <script>
 const main = document.getElementById('main')
 
-main.innerHTML="<iframe class='iframe-style' src='https://northwestern.az1.qualtrics.com/jfe/form/SV_1CaTPg0cEkxIiQm?participantID= <%= participantID %>'> </iframe>"
+main.innerHTML="<iframe class='iframe-style' src='https://northwestern.az1.qualtrics.com/jfe/form/SV_1CaTPg0cEkxIiQm?participantID=<%= participantID %>&whichDay=<%= whichDay %>&whatTime=<%= whatTime %>'> </iframe>"
 
 window.addEventListener("message", (event) => {
   if(event.data == 'closeQSIWindow') {
