@@ -26,7 +26,6 @@ const releaseWakeLock = async () => {
 
 requestWakeLock();
 
-
 const training1 = document.getElementById("training1");
 const cue1 = document.getElementById("cue1");
 const guidance = document.getElementById("guidance");
@@ -34,9 +33,10 @@ const stopGuidance = document.getElementById("stopGuidance")
 
 
 const beginButton = document.getElementById("beginButton");
+const doneForm = document.getElementById('done-form')
 
 let times = [
-  [30000, guidance],
+  [30000, guidance, 0],
   [105000, guidance],
   [180000, guidance],
   [255000, guidance],
@@ -73,6 +73,7 @@ function guide(ls, vol) {
         cue1.play();
         cue1.addEventListener('ended', () => {
           releaseWakeLock()
+          doneForm.submit()
         })
       } else {
         cue1.volume = vol

@@ -30,16 +30,19 @@
    -->
 
 <div class="column-2">
+  <span id="thanks"></span>
   <span id="main"></span>
 </div>
 <script>
 const main = document.getElementById('main')
+const thanks = document.getElementById('thanks')
 
 main.innerHTML="<iframe class='iframe-style' src='https://northwestern.az1.qualtrics.com/jfe/form/SV_1CaTPg0cEkxIiQm?participantID=<%= participantID %>&whichDay=<%= whichDay %>&whatTime=<%= whatTime %>'> </iframe>"
 
 window.addEventListener("message", (event) => {
   if(event.data == 'closeQSIWindow') {
-    main.innerHTML=" <form action='./' method='POST'><button type='submit' class='button-g'>Next</button></form>"
+    thanks.innerHTML ='<p><em>Thank you for your responses! Please, click below to proceed to our sound testing.</em></p>'
+    main.innerHTML="<form action='./' method='POST'><button type='submit' class='button-g'>Next</button></form>"
   }
 }, 
 false);

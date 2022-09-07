@@ -3,6 +3,11 @@ const router = express.Router();
 
 const User = require("../models/account");
 
+let today = new Date();
+let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+let dateTime = date+' '+time;
+
 // Begin Survey Page
 router.get("/", checkAuthenticated, checkAnswered, (req, res) => {
   try {
@@ -60,6 +65,55 @@ router.post("/", checkAuthenticated, async (req, res) => {
   }
 });
 
+// get the dream log page
+router.get("/dream-log", checkAuthenticated, (req, res) => {
+  console.log('getting dream log')
+  
+  const _id = req.session.passport.user
+  // also change to show that first night is slept. when done update model that dream log is done.
+  User.findOne({ _id }, (err, results) => {
+    if (err) {
+      throw (err)
+    } else {
+      res.render("surveys/dream-log", { 
+        headerText: "Dream Log", 
+        participantID: _id,
+        whichDay: results.day,
+        whatTime: dateTime
+       });
+    }
+  })
+});
+
+router.post("/dream-log", checkAuthenticated, async (req, res) => {
+  console.log('posted to dream-log')
+  const _id = req.session.passport.user
+  try {
+    const filter = { _id: _id };
+    const updateDoc = {
+      $set: {
+        slept1: true
+      },
+    };
+    const updd = await User.updateOne(filter, updateDoc, { upsert: true });
+    User.findOne({ _id }, (err, results) => {
+      if (err) {
+        throw (err)
+      } else {
+        res.render("surveys/dream-log", { 
+          headerText: "Dream Log", 
+          participantID: _id,
+          whichDay: results.day,
+          whatTime: dateTime
+         });
+      }
+    })
+   } catch (e) {
+    res.redirect("/");
+    throw(e)
+  }
+})
+
 // ------------ PROGRESS/AUTH CHECKING FUNCTIONS ------------ //
 
 function checkAuthenticated(req, res, next) {
@@ -81,6 +135,10 @@ function checkAnswered(req, res, next) {
       return res.redirect("/sleep");
     }
   });
+}
+
+function checkSlept () {
+
 }
 
 module.exports = router;

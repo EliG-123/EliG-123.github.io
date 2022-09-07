@@ -52,7 +52,6 @@ const hSound = document.getElementById("harpSound");
 
 let tracker = 0;
 
-console.log("yeet");
 
 soundObj = {
   0: soundcheck1,

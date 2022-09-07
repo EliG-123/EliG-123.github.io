@@ -27,30 +27,33 @@ router.get('/training', checkAuthenticated, checkNotAnswered, checkNotSoundCheck
     })
 })
 
-router.post('/training', checkAuthenticated,  checkNotSoundChecked, async (req, res) => {
+router.post('/training', checkAuthenticated, async (req, res) => {
+  console.log('posted to training')
     try {
-        const filter = { _id: req.session.passport.user };
-        const volStr = req.body.volObjFrm
-        const volArr = volStr.split(",")
-        const vol1 = parseFloat(volArr[0])
-        const vol2 = parseFloat(volArr[1])
-        console.log(vol1, vol2)
-        const updateDoc = {
-            $set: {
-                vol1: vol1,
-                vol2: vol2
-            }
-        }
-        const result = await User.updateOne(filter, updateDoc, {upsert:true, new:true})
-        console.log(result)
-        User.findOne({ _id }, (err, results) => {
-            if (err) {
-              throw err;
-            }
-            console.log(results.vol1)
-            res.render('sleep/training', {headerText:'Training', vols: [results.vol1, results.vol2]})
-        })
-    } catch {
+      const _id = req.session.passport.user
+      const filter = { _id: _id };
+      const volStr = req.body.volObjFrm
+      const volArr = volStr.split(",")
+      const vol1 = parseFloat(volArr[0])
+      const vol2 = parseFloat(volArr[1])
+      console.log(vol1, vol2)
+      const updateDoc = {
+          $set: {
+              vol1: vol1,
+              vol2: vol2
+          }
+      }
+      const result = await User.updateOne(filter, updateDoc, {upsert:true, new:true})
+      console.log(result)
+      User.findOne({ _id }, (err, results) => {
+          if (err) {
+            throw err;
+          }
+          console.log(results.vol1)
+          res.render('sleep/training', {headerText:'Training', vols: [results.vol1, results.vol2]})
+      })
+    } catch (e){
+        console.log(e)
         res.redirect('/')
     }
 })
@@ -83,8 +86,7 @@ async function checkSoundChecked (req, res, next) {
     }).clone()
 }
 
-async function checkNotSoundChecked (req, res, next) {
-                                                        
+async function checkNotSoundChecked (req, res, next) {                                                       
     const _id = req.session.passport.user
     await User.findOne({_id }, async (err, results) => {
         if (err) {

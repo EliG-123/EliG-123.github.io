@@ -1,0 +1,21 @@
+<div class="column-2">
+    <span id="thanks"></span>
+    <span id="main"></span>
+  </div>
+  <script>
+  const main = document.getElementById('main')
+  const thanks = document.getElementById('thanks')
+  
+  // Change to dream log survey
+  main.innerHTML="<iframe class='iframe-style' src='https://northwestern.az1.qualtrics.com/jfe/form/SV_1CaTPg0cEkxIiQm?participantID=<%= participantID %>&whichDay=<%= whichDay %>&whatTime=<%= whatTime %>'> </iframe>"
+  
+  window.addEventListener("message", (event) => {
+    if(event.data == 'closeQSIWindow') {
+      thanks.innerHTML ='<p><em>Thank you for your response! Have a good morning!</em></p>'
+      main.innerHTML="<form action='/' method='POST'><button type='submit' class='button-g'>Home</button></form>"
+    }
+  }, 
+  false);
+  
+  
+  </script>
