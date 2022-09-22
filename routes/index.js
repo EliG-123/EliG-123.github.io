@@ -21,6 +21,11 @@ const progLinks = {
   'questionnaire': '/surveys',
   'soundcheck': '/sleep/soundCheck',
   'training': '/sleep/training',
+  'sleep' : 'sleep/training'
+}
+
+const dayLinks = {
+
 }
 
 router.get('/', async (req, res) => {
@@ -59,7 +64,7 @@ router.post('/logout', function(req, res){
         if (err) {
           throw err
         }
-        progObj = { //global variable, i know iknow, bad form but idk how to return it!
+        progObj = { //global variable, i know i know, bad form but idk how to return it!
         }
         if (results.q1a) {
           if (results.vol1) {

@@ -118,6 +118,7 @@ async function checkProgress (req, res) {
         } else {
           progObj['nxtpg'] = 'questionnaire'
         }
+        progObj['day'] = results.day
       }).clone();
     } catch (e) {
       return 'not authenticated'

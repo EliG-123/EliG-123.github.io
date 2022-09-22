@@ -89,14 +89,7 @@ router.post("/dream-log", checkAuthenticated, async (req, res) => {
   console.log('posted to dream-log')
   const _id = req.session.passport.user
   try {
-    const filter = { _id: _id };
-    const updateDoc = {
-      $set: {
-        slept1: true
-      },
-    };
-    const updd = await User.updateOne(filter, updateDoc, { upsert: true });
-    User.findOne({ _id }, (err, results) => {
+    User.findOne({ _id }, async (err, results) => {
       if (err) {
         throw (err)
       } else {
@@ -106,6 +99,16 @@ router.post("/dream-log", checkAuthenticated, async (req, res) => {
           whichDay: results.day,
           whatTime: dateTime
          });
+
+        const filter = { _id: _id };
+        const updateDoc = {
+          $set: {
+             slept1: true, 
+             day: results.day+1
+            },
+        };
+        const updd = await User.updateOne(filter, updateDoc, { upsert: true });
+
       }
     })
    } catch (e) {
@@ -137,8 +140,5 @@ function checkAnswered(req, res, next) {
   });
 }
 
-function checkSlept () {
-
-}
 
 module.exports = router;
