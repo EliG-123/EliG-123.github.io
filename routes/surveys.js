@@ -109,7 +109,7 @@ router.post("/dream-log", checkAuthenticated, async (req, res) => {
       }
     })
    } catch (e) {
-    res.redirect("/");
+    res.redirect("/index");
     throw(e)
   }
 })
