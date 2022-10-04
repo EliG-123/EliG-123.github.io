@@ -36,7 +36,7 @@ const beginButton = document.getElementById("beginButton");
 const doneForm = document.getElementById('done-form')
 
 let times = [
-  [30000, guidance, 0],
+  [30000, guidance, 0], // this has an extra to make it faster. delete 0 when done
   [105000, guidance],
   [180000, guidance],
   [255000, guidance],
