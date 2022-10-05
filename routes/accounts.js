@@ -74,12 +74,17 @@ router.post("/login", checkNotAuthenticated, passport.authenticate('local', {
         failureFlash:true,
       }), async (req, res) => {
         let ou = await checkProgress(req, res)
-        console.log(progObj, progLinks[progObj['nxtpg']])
-        res.render('accounts/', { 
-          name:req.user.name, 
-          nextpg:progObj['nxtpg'], 
-          nxtLink: progLinks[progObj['nxtpg']]
+        try{ 
+          console.log(progObj, progLinks[progObj['nxtpg']])
+          res.render('accounts/', { 
+            name:req.user.name, 
+            nextpg:progObj['nxtpg'], 
+            nxtLink: progLinks[progObj['nxtpg']]
          })
+        } catch (e) {
+          console.log(e)
+          alert('Please reload the page')
+        }
       })
 
 // Register Page

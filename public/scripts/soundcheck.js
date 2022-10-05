@@ -12,17 +12,7 @@ const requestWakeLock = async () => {
   }
 }
 
-const releaseWakeLock = async () => {
-  if (!wakeLock) {
-    return
-  }
-  try {
-    await wakeLock.release()
-    wakeLock = null;
-  } catch (e) {
-    console.log(e)
-  }
-}
+
 
 requestWakeLock();
 
@@ -47,6 +37,7 @@ let harpSoundClicked = false;
 
 const thBeep = document.getElementById("threeBeeps");
 const hSound = document.getElementById("harpSound");
+const cantHear = document.getElementById("cantHear")
 
 
 
@@ -124,7 +115,6 @@ function playIt(audioPart, rem, endFunc, ...args) {
 
 function whichButtonFunc() {
   console.log("whichButtonFunc " + tracker);
-
   setTimeout(() => {
     cueObj[tracker][0].volume = volObj[tracker - 2];
     cueObj[tracker][0].play();
@@ -135,9 +125,12 @@ function whichButtonFunc() {
           thBeep.innerHTML =
             '<button class="button-g" role="button" onclick="threeBeepFunc()">Three Beeps</button>';
           hSound.innerHTML =
-            '<button class="button-p" role="button" onclick="harpSoundFunc()">Harp Sound</button>';
+            '<button class="button-p" role="button" onclick="harpSoundFunc()">Violin Sound</button>';
+          cantHear.innerHTML = 
+            "<button class='button-b' role='button' onclick='cantHearFunc()'>Couldn't Hear</button>";
           thBeep.style.visibility = "visible";
           hSound.style.visibility = "visible";
+          cantHear.style.visibility= "visible";
         });
       }, 500);
     });
@@ -146,6 +139,18 @@ function whichButtonFunc() {
   console.log(volObj);
 }
 
+function cantHearFunc() {
+  console.log("couldn't hear" + tracker);
+  volObj[tracker - 2] += 0.00005;
+
+  thBeep.style.visibility = "hidden";
+  hSound.style.visibility = "hidden";
+  cantHear.style.visibility= "hidden";
+  // maybe add in here an audio saying this was wrong, we will try again at a higher volume...
+  whichButtonFunc();
+}
+
+
 function threeBeepFunc() {
   if (tracker == 2) {
     // right if tracker is 2, wrong if 3
@@ -153,6 +158,7 @@ function threeBeepFunc() {
 
     thBeep.style.visibility = "hidden";
     hSound.style.visibility = "hidden";
+    cantHear.style.visibility= "hidden";
 
     playIt(
       soundObj[tracker],
@@ -162,10 +168,11 @@ function threeBeepFunc() {
     );
   } else if (tracker == 3) {
     console.log("this was wrong " + tracker);
-    volObj[tracker - 2] += 0.02;
+    volObj[tracker - 2] += 0.00005;
 
     thBeep.style.visibility = "hidden";
     hSound.style.visibility = "hidden";
+    cantHear.style.visibility= "hidden";
     // maybe add in here an audio saying this was wrong, we will try again at a higher volume...
     whichButtonFunc();
   }
@@ -178,6 +185,7 @@ function harpSoundFunc() {
 
     thBeep.style.visibility = "hidden";
     hSound.style.visibility = "hidden";
+    cantHear.style.visibility= "hidden";
 
     playIt(
       soundObj[tracker],
@@ -187,10 +195,11 @@ function harpSoundFunc() {
     );
   } else if (tracker == 2) {
     console.log("this was wrong " + tracker);
-    volObj[tracker - 2] += 0.02;
+    volObj[tracker - 2] += 0.00005;
 
     thBeep.style.visibility = "hidden";
     hSound.style.visibility = "hidden";
+    cantHear.style.visibility= "hidden";
 
     whichButtonFunc();
   }
@@ -202,17 +211,27 @@ function volTest(cuePart) {
     '<button class="button-p" role="button" onclick="heardIt()">Heard It</button>';
   document.getElementById("heardButton").style.visibility = "visible";
 
-  let vol = 0.01;
-  let cueCheck = setInterval(function () {
+  let vol = 0.0001;
+  cuePart[0].volume = vol;
+  cuePart[0].play();
+  let i = 0
+
+  let cueCheck = setInterval(() => {
+    i += 1
     // play the cues at increasing volume, every **15s
-    if (!heard) {
+    if (!heard & i % 30 == 0) {
+      vol += 0.00005;
+      console.log(vol)
       cuePart[0].volume = vol;
       cuePart[0].play();
-      vol += 0.01;
-    } else {
+      
+    } else if (!heard & i % 30 != 0) {
+        
+    } if (heard) {
       console.log(vol);
       document.getElementById("heardButton").style.visibility = "hidden";
       clearInterval(cueCheck);
+      console.log('cleared')
       heard = false;
       volObj.push(vol);
       tracker += 1;
@@ -223,7 +242,19 @@ function volTest(cuePart) {
         cueObj[tracker]
       );
     }
-  }, 2000);
+  }, 500);
+}
+
+const releaseWakeLock = async () => {
+  if (!wakeLock) {
+    return 0
+  }
+  try {
+    await wakeLock.release()
+    wakeLock = null;
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 function startTrainingButtonFunc() {
