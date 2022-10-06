@@ -27,6 +27,7 @@ const releaseWakeLock = async () => {
 requestWakeLock();
 
 const training1 = document.getElementById("training1");
+const training2 = document.getElementById('training2')
 const cue1 = document.getElementById("cue1");
 const guidance = document.getElementById("guidance");
 const stopGuidance = document.getElementById("stopGuidance")
@@ -36,7 +37,7 @@ const beginButton = document.getElementById("beginButton");
 const doneForm = document.getElementById('done-form')
 
 let times = [
-  [30000, guidance, 0], // this has an extra to make it faster. delete 0 when done
+  [30000, guidance], // this has an extra to make it faster. delete 0 when done (nevermind)
   [105000, guidance],
   [180000, guidance],
   [255000, guidance],
@@ -87,6 +88,9 @@ function playIntro(voluu) {
   beginButton.parentNode.removeChild(beginButton);
   training1.play();
   training1.addEventListener("ended", () => {
-    guide(times, voluu);
+    training2.play();
+    training2.addEventListener("ended", () => {
+      guide(times, voluu);
+     })
   });
 }
