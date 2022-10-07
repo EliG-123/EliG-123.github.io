@@ -20,10 +20,10 @@ const soundcheck2 = document.getElementById("soundcheck2");
 
 console.log(soundcheck1);
 
-const cue1a = document.getElementById("cue1"); //three beeps
-const cue1 = audioContext.createMediaElementSource(cue1a)
-let gainNode = audioContext.createGain();
-cue1.connect(gainNode).connect(audioContext.destination);
+const cue1 = document.getElementById("cue1"); //three beeps
+// const cue1 = audioContext.createMediaElementSource(cue1a)
+// let gainNode = audioContext.createGain();
+// cue1.connect(gainNode).connect(audioContext.destination);
 
 const cue2 = document.getElementById("cue2"); // harp sound
 
