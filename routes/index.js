@@ -21,7 +21,7 @@ const progLinks = {
   'questionnaire': '/surveys',
   'soundcheck': '/sleep/soundCheck',
   'training': '/sleep/training',
-  'sleep' : 'sleep/training'
+  'sleeping' : 'sleep/sleeping'
 }
 
 const dayLinks = {
@@ -54,13 +54,10 @@ router.post('/logout', function(req, res){
   });
 
   async function checkProgress (req, res) {
-    console.log('checking')
     try {
-      console.log('iffing')
       const _id = req.session.passport.user
       console.log('id')
       await User.findOne({_id }, async (err, results) => {
-        console.log('found')
         if (err) {
           throw err
         }
@@ -68,7 +65,12 @@ router.post('/logout', function(req, res){
         }
         if (results.q1a) {
           if (results.vol1) {
-            progObj['nxtpg'] = 'training'
+            if (results.day == 1) {
+              progObj['nxtpg'] = 'training'
+            } else {
+              progObj['nxtpg'] = 'sleeping'
+            }
+            
           } else {
             progObj['nxtpg'] = 'soundcheck'
           }
@@ -77,9 +79,8 @@ router.post('/logout', function(req, res){
         }
       }).clone();
     } catch (e) {
-      console.log('caught', e)
-      return null
+      return 'not authenticated'
     }
   }
 
-module.exports = router 
+module.exports = router

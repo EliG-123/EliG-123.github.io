@@ -1,0 +1,45 @@
+<script>
+    const volStr = '<%- vols %>'
+    console.log(volStr)
+    const volArr = volStr.split(",")
+    console.log(volArr)
+    const vol = parseFloat(volArr[0])
+    console.log(vol)
+  </script>
+  
+  <div class="row">
+    <div class="column-2">
+      <a class="button-b" role="button" href="./" target="_self">
+        Home
+      </a>
+    </div>
+    <div class="column-2">
+      <h2>
+        <em>Please, lie comfortably with your phone by your pillow.</em>
+      </h2>
+    </div>
+  
+  
+    <audio src="/audio/training1.mp3" id="training1"></audio>
+    <audio src="/audio/training2.mp3" id="training2"></audio>
+    <audio src="/audio/3beeps.mp3" id="cue1"></audio>
+    <audio src="/audio/guidance.mp3" id="guidance"></audio>
+    <audio src="/audio/continue.mp3" id="stopGuidance"></audio>
+  </div>
+  <div class="row">
+    <div class="column">
+      <button
+        class="button-g"
+        role="button"
+        onclick="playIntro(vol)"
+        id="beginButton">
+        Begin
+      </button>
+      <form id="done-form" action="/surveys/dream-log" method="POST"> <!-- wrong action?? -->
+        <span id="done"></span>
+      </form>
+  
+    </div>
+  </div>
+  <script type="text/javascript" src="/scripts/training.js"></script>
+  

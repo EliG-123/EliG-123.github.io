@@ -13,6 +13,7 @@ const progLinks = {
   'questionnaire': '/surveys',
   'soundcheck': '/sleep/soundCheck',
   'training': '/sleep/training',
+  'sleeping': '/sleep/sleeping'
 }
 
 const flash = require('express-flash')
@@ -56,8 +57,8 @@ router.get("/", checkAuthenticated, async (req, res) => {
       throw err
     }
     res.render("accounts/index", { 
-      name:results.name, nextpg: 
-      progObj['nxtpg'],
+      name: results.name,
+      nextpg: progObj['nxtpg'],
       nxtLink: progLinks[progObj['nxtpg']]
      }); 
   });
@@ -164,7 +165,12 @@ async function checkProgress (req, res) {
       }
       if (results.q1a) {
         if (results.vol1) {
-          progObj['nxtpg'] = 'training'
+          if (results.day == 1) {
+            progObj['nxtpg'] = 'training'
+          } else {
+            progObj['nxtpg'] = 'sleeping'
+          }
+          
         } else {
           progObj['nxtpg'] = 'soundcheck'
         }

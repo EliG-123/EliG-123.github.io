@@ -38,7 +38,7 @@ const doneForm = document.getElementById('done-form')
 
 let times = [
   [30000, guidance], // this has an extra to make it faster. delete 0 when done (nevermind)
-  [105000, guidance],
+  [105000, guidance], // its quicker because the guidance takes longer, have to add that into the time difference.
   [180000, guidance],
   [255000, guidance],
   // --- stop guidance now --- //
@@ -60,20 +60,29 @@ let times = [
 function guide(ls, vol) {
   console.log("starting");
   for (let i = 0; i < ls.length; i++) {
+    console.log(i)
     setTimeout(() => {
+      console.log('timeout', i)
       if (ls[i].length == 2) {
         cue1.volume = vol
         cue1.play();
         cue1.addEventListener("ended", () => {
           setTimeout(() => {
-            ls[i][1].play();
+            console.log(i, ls[i])
+            console.log(i, ls[i][1])
+            try {
+              ls[i][1].volume = 0.5;
+              ls[i][1].play();
+              } catch {}
+            ls[i].shift()
+
           }, 700);
         });
       } else if (ls[i].length == 3) {
         cue1.volume = vol;
         cue1.play();
         cue1.addEventListener('ended', () => {
-          releaseWakeLock()
+          //releaseWakeLock() // releasing toooo early????
           doneForm.submit()
         })
       } else {
