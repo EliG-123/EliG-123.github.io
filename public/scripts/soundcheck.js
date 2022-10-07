@@ -1,5 +1,11 @@
 let wakeLock = null
 
+
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+const audioContext = new AudioContext();
+
+
 const requestWakeLock = async () => {
   try {
     wakeLock = await navigator.wakeLock.request()
@@ -16,8 +22,10 @@ const soundcheck2 = document.getElementById("soundcheck2");
 
 console.log(soundcheck1);
 
-
-const cue1 = document.getElementById("cue1"); // three beeps
+const cue1a = document.getElementById("cue1"); //three beeps
+const cue1 = audioContext.createMediaElementSource(cue1a)
+let gainNode = audioContext.createGainNode();
+cue1.connect(gainNode).connect(audioContext.destination);
 const cue2 = document.getElementById("cue2"); // harp sound
 
 const discrim1 = document.getElementById("discrim1");
@@ -207,7 +215,7 @@ function volTest(cuePart) {
   document.getElementById("heardButton").style.visibility = "visible";
 
   let vol = 0.0001;
-  cuePart[0].volume = vol;
+  gainNode.gain.value = vol;
   cuePart[0].play();
   let i = 0
 
@@ -217,7 +225,7 @@ function volTest(cuePart) {
     if (!heard & i % 30 == 0) {
       vol += 0.00005;
       console.log(vol)
-      cuePart[0].volume = vol;
+      gainNode.gain.value = vol;
       cuePart[0].play();
       
     } else if (!heard & i % 30 != 0) {
