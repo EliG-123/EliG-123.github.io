@@ -3,16 +3,11 @@ let wakeLock = null
 const requestWakeLock = async () => {
   try {
     wakeLock = await navigator.wakeLock.request()
-    wakeLock.addEventListener('release', () => {
-      console.log('Wake Lock was released');
-    });
     console.log('Wake Lock is active');  
   } catch (e) {
     console.log(e)
   }
 }
-
-
 
 requestWakeLock();
 
@@ -245,18 +240,17 @@ function volTest(cuePart) {
   }, 500);
 }
 
-const releaseWakeLock = async () => {
-  if (!wakeLock) {
-    return 0
-  }
-  try {
-    await wakeLock.release()
-    wakeLock = null;
-  } catch (e) {
-    console.log(e)
-  }
-}
-
+// const releaseWakeLock = async () => {
+//   if (!wakeLock) {
+//     return 0
+//   }
+//   try {
+//     await wakeLock.release()
+//     wakeLock = null;
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
 function startTrainingButtonFunc() {
   thBeep.parentNode.removeChild(thBeep);
   hSound.parentNode.removeChild(hSound);
@@ -266,7 +260,7 @@ function startTrainingButtonFunc() {
   document.getElementById("startTrainingButton").innerHTML =
     '<button type="submit" class="button-g">Start Training</button>';
 
-  releaseWakeLock()
+  // releaseWakeLock()
 }
 
 

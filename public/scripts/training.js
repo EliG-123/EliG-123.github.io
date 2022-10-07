@@ -3,26 +3,26 @@ let wakeLock = null
 const requestWakeLock = async () => {
   try {
     wakeLock = await navigator.wakeLock.request()
-    wakeLock.addEventListener('release', () => {
-      console.log('Wake Lock was released');
-    });
+    // wakeLock.addEventListener('release', () => {
+    //   console.log('Wake Lock was released');
+    // });
     console.log('Wake Lock is active');  
   } catch (e) {
     console.log(e)
   }
 }
 
-const releaseWakeLock = async () => {
-  if (!wakeLock) {
-    return;
-  }
-  try {
-    await wakeLock.release()
-    wakeLock = null;
-  } catch (e) {
-    console.log (e)
-  }
-}
+// const releaseWakeLock = async () => {
+//   if (!wakeLock) {
+//     return;
+//   }
+//   try {
+//     await wakeLock.release()
+//     wakeLock = null;
+//   } catch (e) {
+//     console.log (e)
+//   }
+// }
 
 requestWakeLock();
 
