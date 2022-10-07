@@ -24,10 +24,6 @@ const progLinks = {
   'sleeping' : 'sleep/sleeping'
 }
 
-const dayLinks = {
-
-}
-
 router.get('/', async (req, res) => {
   try {
     if (req.isAuthenticated()) {
