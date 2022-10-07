@@ -24,7 +24,7 @@ console.log(soundcheck1);
 
 const cue1a = document.getElementById("cue1"); //three beeps
 const cue1 = audioContext.createMediaElementSource(cue1a)
-let gainNode = audioContext.createGainNode();
+let gainNode = audioContext.createGain();
 cue1.connect(gainNode).connect(audioContext.destination);
 const cue2 = document.getElementById("cue2"); // harp sound
 

@@ -34,7 +34,7 @@ const training1 = document.getElementById("training1");
 const training2 = document.getElementById('training2')
 const cue1a = document.getElementById("cue1");
 const cue1 = audioContext.createMediaElementSource(cue1a)
-let gainNode = audioContext.createGainNode();
+let gainNode = audioContext.createGain();
 cue1.connect(gainNode).connect(audioContext.destination);
 const guidance = document.getElementById("guidance");
 const stopGuidance = document.getElementById("stopGuidance")
