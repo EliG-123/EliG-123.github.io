@@ -1,5 +1,9 @@
 let wakeLock = null
 
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+const audioContext = new AudioContext();
+
 const requestWakeLock = async () => {
   try {
     wakeLock = await navigator.wakeLock.request()
@@ -28,7 +32,10 @@ requestWakeLock();
 
 const training1 = document.getElementById("training1");
 const training2 = document.getElementById('training2')
-const cue1 = document.getElementById("cue1");
+const cue1a = document.getElementById("cue1");
+const cue1 = audioContext.createMediaElementSource(cue1a)
+let gainNode = audioContext.createGainNode();
+cue1.connect(gainNode).connect(audioContext.destination);
 const guidance = document.getElementById("guidance");
 const stopGuidance = document.getElementById("stopGuidance")
 
@@ -64,7 +71,7 @@ function guide(ls, vol) {
     setTimeout(() => {
       console.log('timeout', i)
       if (ls[i].length == 2) {
-        cue1.volume = vol
+        gainNode.gain.value = vol
         cue1.play();
         cue1.addEventListener("ended", () => {
           setTimeout(() => {
