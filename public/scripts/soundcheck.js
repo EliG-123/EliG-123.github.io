@@ -242,7 +242,7 @@ function volTest(cuePart) {
         remObj[tracker],
         funcObj[tracker],
         cueObj[tracker]
-      );
+      ); // maybe move this into the heard it function?
     }
   }, 500);
 }
