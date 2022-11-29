@@ -1,26 +1,69 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Webpack App</title>
-    <script defer src="main.js"></script></head>
-    <body>
-        <h1>Hello world!</h1>
-        <h2>Tip: Check your console</h2>
-    </body>
-    
-    <script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker
-                    .register("service-worker.js")
-                    .then((registration) => {
-                        console.log("Service Worker registered: ", registration);
-                    })
-                    .catch((registrationError) => {
-                        console.error("Service Worker registration failed: ", registrationError);
-                    });
-            });
-        }
-    </script>
-</html>
+<head><script defer src="main.js"></script></head>Html Webpack Plugin:
+<pre>
+  Error: Child compilation failed:
+  Module not found: Error: Can't resolve '/Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/index.html' in '/Users/eliganz/Desktop/School/Research/LucidDre  aming/Website2'
+  ModuleNotFoundError: Module not found: Error: Can't resolve '/Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/index.html' in '/Users/eliganz/Desktop/Sch  ool/Research/LucidDreaming/Website2'
+      at /Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/webpack/lib/Compilation.js:2016:28
+      at /Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/webpack/lib/NormalModuleFactory.js:798:13
+      at eval (eval at create (/Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:10:1)
+      at /Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/webpack/lib/NormalModuleFactory.js:270:22
+      at eval (eval at create (/Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:9:1)
+      at /Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/webpack/lib/NormalModuleFactory.js:434:22
+      at /Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/webpack/lib/NormalModuleFactory.js:120:11
+      at /Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/webpack/lib/NormalModuleFactory.js:670:25
+      at /Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/webpack/lib/NormalModuleFactory.js:855:8
+      at /Users/eliganz/Desktop/School/Research/LucidDreaming/Website2/node_modules/webpack/lib/NormalModuleFactory.js:975:5
+  
+  - Compilation.js:2016 
+    [Website2]/[webpack]/lib/Compilation.js:2016:28
+  
+  - NormalModuleFactory.js:798 
+    [Website2]/[webpack]/lib/NormalModuleFactory.js:798:13
+  
+  
+  - NormalModuleFactory.js:270 
+    [Website2]/[webpack]/lib/NormalModuleFactory.js:270:22
+  
+  
+  - NormalModuleFactory.js:434 
+    [Website2]/[webpack]/lib/NormalModuleFactory.js:434:22
+  
+  - NormalModuleFactory.js:120 
+    [Website2]/[webpack]/lib/NormalModuleFactory.js:120:11
+  
+  - NormalModuleFactory.js:670 
+    [Website2]/[webpack]/lib/NormalModuleFactory.js:670:25
+  
+  - NormalModuleFactory.js:855 
+    [Website2]/[webpack]/lib/NormalModuleFactory.js:855:8
+  
+  - NormalModuleFactory.js:975 
+    [Website2]/[webpack]/lib/NormalModuleFactory.js:975:5
+  
+  - child-compiler.js:169 
+    [Website2]/[html-webpack-plugin]/lib/child-compiler.js:169:18
+  
+  - Compiler.js:551 finalCallback
+    [Website2]/[webpack]/lib/Compiler.js:551:5
+  
+  - Compiler.js:577 
+    [Website2]/[webpack]/lib/Compiler.js:577:11
+  
+  - Compiler.js:1196 
+    [Website2]/[webpack]/lib/Compiler.js:1196:17
+  
+  
+  - Hook.js:18 Hook.CALL_ASYNC_DELEGATE [as _callAsync]
+    [Website2]/[tapable]/lib/Hook.js:18:14
+  
+  - Compiler.js:1192 
+    [Website2]/[webpack]/lib/Compiler.js:1192:33
+  
+  - Compilation.js:2787 finalCallback
+    [Website2]/[webpack]/lib/Compilation.js:2787:11
+  
+  - Compilation.js:3092 
+    [Website2]/[webpack]/lib/Compilation.js:3092:11
+  
+  
+</pre>
