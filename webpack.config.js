@@ -38,11 +38,15 @@ const config = {
       // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
+  
 };
 
 module.exports = () => {
+
   if (isProduction) {
     config.mode = "production";
+    
+    
 
     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
   } else {
