@@ -13,7 +13,6 @@ const indexRouter = require("./routes/index");
 const sleepRouter = require("./routes/sleep");
 const surveyRouter = require("./routes/surveys")
 const accountsRouter = require("./routes/accounts")
-
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
