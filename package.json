@@ -12,6 +12,7 @@
     "heroku-postbuild": "npm run build",
     "build": "webpack --config webpack.config.js"
   },
+  
   "keywords": [],
   "author": "",
   "license": "ISC",
