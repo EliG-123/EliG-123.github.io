@@ -4,16 +4,17 @@ const User = require('./models/account');
 
 
 function initialize (passport, getUserById) {
+    // THis is for creating accounts. 
     const authenticateUser = async (username, password, done) => {
-        const user = await User.findOne({ username: username })
+        const user = await User.findOne({ username: username }) // Find the user to authenticate
         console.log(user)
-        if (user == null) {
+        if (user == null) { // If wrong username
             return done(null, false, {message: 'Incorrect Username or Password'})
         }
         try {
-           if ( await bcrypt.compare(password, user.password) ) {
+           if ( await bcrypt.compare(password, user.password) ) { // authenticate password
             return done(null, user)
-           } else {
+           } else { //if wrong password
             return done(null, false, {message: 'Incorrect Username or Password'})
            }
         } catch (e) {
@@ -22,15 +23,18 @@ function initialize (passport, getUserById) {
 
     }
 
-    passport.use(new localStrategy({
+    passport.use(new localStrategy({ 
+        // creating the local strategy to authenticate user.
         usernameField:'username'
     }, authenticateUser) )
 
-    passport.serializeUser((user, done) => {
+    passport.serializeUser((user, done) => { 
+        //serialize the user
         done(null, user.id)
     })
     
-    passport.deserializeUser((id, done) => {
+    passport.deserializeUser((id, done) => { 
+        //for logging out
         return done(null, getUserById(id))
     })
 }

@@ -1,3 +1,9 @@
+// Router for the sleep pages
+// The sleep pages are Index, soundcheck, training, sleeping (not used rn.)
+//    Index: directs to the correct page
+//    Soundcheck: does sound check
+//    Training: does training
+
 const express = require('express');
 const { serializeUser } = require('passport');
 const router = express.Router();
@@ -39,16 +45,7 @@ router.get('/training', checkAuthenticated, checkNotAnswered, checkNotSoundCheck
     })
 })
 
-router.get('/sleeping', checkAuthenticated, checkNotAnswered, checkNotSoundChecked, checkTrained,  (req, res) => {
-  const _id = req.session.passport.user
-  User.findOne({ _id }, (err, results) => {
-      if (err) {
-        throw err;
-      }
-      res.render('sleep/training', {headerText:'Training', vols: [results.vol1, results.vol2]})
-  })
-})
-
+// Save the training, use the correct volume from the soundcheck, update progress.
 router.post('/training', checkAuthenticated, async (req, res) => {
   console.log('posted to training')
     try {
@@ -79,6 +76,19 @@ router.post('/training', checkAuthenticated, async (req, res) => {
         res.redirect('/')
     }
 })
+
+
+// Will eventually be used for the right sleep functioning.
+router.get('/sleeping', checkAuthenticated, checkNotAnswered, checkNotSoundChecked, checkTrained,  (req, res) => {
+  const _id = req.session.passport.user
+  User.findOne({ _id }, (err, results) => {
+      if (err) {
+        throw err;
+      }
+      res.render('sleep/training', {headerText:'Training', vols: [results.vol1, results.vol2]})
+  })
+})
+
 
 
 function checkAuthenticated (req, res, next) {

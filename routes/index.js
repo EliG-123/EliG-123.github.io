@@ -1,3 +1,6 @@
+// Routes for the home page
+// puts the next step on the home page
+
 const express = require('express')
 const router = express.Router();
 const passport = require("passport")
@@ -25,6 +28,7 @@ const progLinks = {
 }
 
 router.get('/', async (req, res) => {
+  // Home page
   try {
     if (req.isAuthenticated()) {
       await checkProgress(req, res)

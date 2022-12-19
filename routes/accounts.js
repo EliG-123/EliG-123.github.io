@@ -1,3 +1,9 @@
+// This is the routes for the accounts pages.
+// There are four pages: Index, login, register, User(not used for now.)
+//    Index page has a navigation to whatever the next step in the experiment in
+//    Login is for loggin in 
+//    Register is for creating a new account.
+
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
@@ -10,6 +16,7 @@ const passport = require("passport")
 const localStrategy = require('passport-local').Strategy
 
 const progLinks = {
+  // to check the progress of the user to navigate to the correct next step.
   'questionnaire': '/surveys',
   'soundcheck': '/sleep/soundCheck',
   'training': '/sleep/training',
@@ -135,6 +142,7 @@ router.delete('/logout', (req, res) => {
 // ------------ PROGRESS/AUTH CHECKING FUNCTIONS ------------ //
 
 function checkAuthenticated (req, res, next) {
+  // if authenticated cant go to login, have to go to index
     if (req.isAuthenticated()) {
         return next()
     }
@@ -143,6 +151,7 @@ function checkAuthenticated (req, res, next) {
 }
 
 function checkNotAuthenticated (req, res, next) {
+  // if not authenticated, cant go to index, must login
     if (req.isAuthenticated()) {
       try {
         return res.redirect('./')
@@ -154,6 +163,7 @@ function checkNotAuthenticated (req, res, next) {
 }
 
 async function checkProgress (req, res) {
+  // Checks your progress as a user, see whats next.
   try {
     const _id = req.session.passport.user
     console.log('id')
