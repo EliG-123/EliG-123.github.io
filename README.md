@@ -1,4 +1,4 @@
-Welcome to the lucid dream apps code!
+Welcome to the lucid dream app's code!
 
 This is written with node.js it uses MVC backend structure.
 
